@@ -16,7 +16,7 @@ export class AllPageComponent {
   }
 
   listWithCapital(): void {
-    this.service.listAllWithCapital2()
+    this.service.listAllWithCapital()
       .subscribe(response => {
         this.countries = response.data;
       });

@@ -1,1 +1,32 @@
-<p>by-country-page works!</p>
+<h3>Por country</h3>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <!-- SerchBox -->
+    <shared-search-box placeholder="Buscar por país" (onValue)="searchByCountry($event)"></shared-search-box>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="mt-2">
+        <label>País: </label>
+        <input type="text" class="form-control" disabled value="{{country?.name}}">
+    </div>
+    <div class="mt-2">
+        <label>Iso 2</label>
+        <input type="text" class="form-control" disabled value="{{country?.iso2}}" />
+    </div>
+  </div>
+  <div class="col">
+    <div class="mt-2">
+        <label>Capital</label>
+        <input type="text" class="form-control" disabled value="{{country?.capital}}" />
+    </div>
+    <div class="mt-2">
+      <label>Iso 3</label>
+      <input type="text" class="form-control" disabled value="{{country?.iso3}}" />
+    </div>
+  </div>
+</div>
