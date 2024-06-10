@@ -1,7 +1,7 @@
-export interface CountryData {
+export interface CountryResponse {
   error: boolean;
   msg:   string;
-  data:  Country;
+  data:  Country[];
 }
 
 export interface Country {

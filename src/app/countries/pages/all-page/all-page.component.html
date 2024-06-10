@@ -1,0 +1,25 @@
+<h3>Todos</h3>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <td>País</td>
+          <td>Capital</td>
+          <td>Iso 2</td>
+          <td>Iso 3</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{country.name}}</td>
+          <td>{{country.capital}}</td>
+          <td>{{country.iso2}}</td>
+          <td>{{country.iso3}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
