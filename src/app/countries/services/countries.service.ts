@@ -11,6 +11,7 @@ export class CountriesService {
   private apiBaseAddress: string = 'https://restcountries.com';
   private getByCapitalEndpoint: string = 'v3.1/capital';
   private getByNameEndpoint: string = 'v3.1/name';
+  private getByRegionEndpoint: string = 'v3.1/region';
 
   constructor(private http: HttpClient) { }
 
@@ -30,6 +31,16 @@ export class CountriesService {
       .pipe(
         catchError(() => {
           return of([])
+        })
+      );
+  }
+
+  public searchByRegion(term: string): Observable<Country[]> {
+    const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}`;
+    return this.http.get<Country[]>(`${url}/${term}`)
+      .pipe(
+        catchError(() => {
+          return  of([])
         })
       );
   }
