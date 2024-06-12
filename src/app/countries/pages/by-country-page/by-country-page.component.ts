@@ -9,15 +9,13 @@ import { Country } from '../../interfaces/country-data';
 })
 export class ByCountryPageComponent {
 
-  public country: Country | undefined = undefined;
+  public country!: Country;
 
   constructor(private service: CountriesService) { }
 
   public searchByCountry(country: string): void {
-    debugger;
     this.service.searchByCountry(country)
       .subscribe(response => {
-        debugger;
         this.country = response.data;
     })
   }

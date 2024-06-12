@@ -1,0 +1,20 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Capital</th>
+      <th>País</th>
+      <th>Iso 2</th>
+      <th>Iso 3</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <td>{{country.name}}</td>
+      <td>{{country.capital}}</td>
+      <td>{{country.iso2}}</td>
+      <td>{{country.iso3}}</td>
+      <td><a href="#">ver más</a></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Country, CountryResponse } from '../interfaces/country-data';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,18 @@ export class CountriesService {
 
     const requestBody = { country };
     return this.http
-      .post<CountryResponse<Country>>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}`, requestBody);
+      .post<CountryResponse<Country>>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}`, requestBody)
+      .pipe(
+        catchError(error => {
+          console.log(error);
+
+          const emptyCountry: Country = { name: '', capital: '', iso2: '', iso3: '' }
+          return of({
+            error: false,
+            msg: 'Country not found',
+            data: emptyCountry
+          } as CountryResponse<Country>)
+        })
+      );
   }
 }
