@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { Country } from '../interfaces/country';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class CountriesService {
   private getByCapitalEndpoint: string = 'v3.1/capital';
   private getByNameEndpoint: string = 'v3.1/name';
   private getByRegionEndpoint: string = 'v3.1/region';
+  private getByAlphaCodeEndpoint: string = 'v3.1/alpha';
 
   constructor(private http: HttpClient) { }
 
@@ -41,6 +42,17 @@ export class CountriesService {
       .pipe(
         catchError(() => {
           return  of([])
+        })
+      );
+  }
+
+  public getByAlphaCode(code: string): Observable<Country | null> {
+    const url: string = `${this.apiBaseAddress}/${this.getByAlphaCodeEndpoint}`;
+    return this.http.get<Country[]>(`${url}/${code}`)
+      .pipe(
+        map(countries => countries.length == 1 ? countries[0] : null),
+        catchError(() => {
+          return of(null)
         })
       );
   }
