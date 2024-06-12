@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CountriesService } from '../../services/countries.service';
-import { Country } from '../../interfaces/country-data';
+import { Country } from '../../interfaces/country';
 
 @Component({
   selector: 'app-by-country-page',
@@ -13,10 +13,4 @@ export class ByCountryPageComponent {
 
   constructor(private service: CountriesService) { }
 
-  public searchByCountry(country: string): void {
-    this.service.searchByCountry(country)
-      .subscribe(response => {
-        this.country = response.data;
-    })
-  }
 }

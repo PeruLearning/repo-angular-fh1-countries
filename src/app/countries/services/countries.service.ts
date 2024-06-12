@@ -1,38 +1,23 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Country, CountryResponse } from '../interfaces/country-data';
 import { Observable, catchError, of } from 'rxjs';
+import { Country } from '../interfaces/country';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountriesService {
 
-  private apiBaseAddress: string = 'https://countriesnow.space';
-  private getWithCapitalEndpoint: string = 'api/v0.1/countries/capital';
+  private apiBaseAddress: string = 'https://restcountries.com';
+  private getWithCapitalEndpoint: string = 'v3.1/capital';
 
   constructor(private http: HttpClient) { }
 
-  public listAllWithCapital(): Observable<CountryResponse<Country[]>> {
-    return this.http
-      .get<CountryResponse<Country[]>>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}`);
-  }
-
-  public searchByCountry(country: string): Observable<CountryResponse<Country>> {
-
-    const requestBody = { country };
-    return this.http
-      .post<CountryResponse<Country>>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}`, requestBody)
+  public searchByCapital(term: string): Observable<Country[]> {
+    return this.http.get<Country[]>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}/${term}`)
       .pipe(
-        catchError(error => {
-          console.log(error);
-
-          const emptyCountry: Country = { name: '', capital: '', iso2: '', iso3: '' }
-          return of({
-            error: false,
-            msg: 'Country not found',
-            data: emptyCountry
-          } as CountryResponse<Country>)
+        catchError(() => {
+          return of([])
         })
       );
   }
