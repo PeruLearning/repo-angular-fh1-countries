@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { Country } from '../interfaces/country';
@@ -9,12 +9,24 @@ import { Country } from '../interfaces/country';
 export class CountriesService {
 
   private apiBaseAddress: string = 'https://restcountries.com';
-  private getWithCapitalEndpoint: string = 'v3.1/capital';
+  private getByCapitalEndpoint: string = 'v3.1/capital';
+  private getByNameEndpoint: string = 'v3.1/name';
 
   constructor(private http: HttpClient) { }
 
   public searchByCapital(term: string): Observable<Country[]> {
-    return this.http.get<Country[]>(`${this.apiBaseAddress}/${this.getWithCapitalEndpoint}/${term}`)
+    const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}`;
+    return this.http.get<Country[]>(`${url}/${term}`)
+      .pipe(
+        catchError(() => {
+          return of([])
+        })
+      );
+  }
+
+  public searchByCountryName(term: string): Observable<Country[]> {
+    const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}`;
+    return this.http.get<Country[]>(`${url}/${term}`)
       .pipe(
         catchError(() => {
           return of([])

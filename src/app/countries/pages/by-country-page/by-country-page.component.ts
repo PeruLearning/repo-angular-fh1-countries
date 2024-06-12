@@ -9,8 +9,15 @@ import { Country } from '../../interfaces/country';
 })
 export class ByCountryPageComponent {
 
-  public country!: Country;
+  public countries: Country[] = [];
 
   constructor(private service: CountriesService) { }
+
+  public searchByCountry(term: string): void {
+    this.service.searchByCountryName(term)
+      .subscribe(response => {
+        this.countries = response;
+      });
+  }
 
 }
