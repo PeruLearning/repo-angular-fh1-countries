@@ -12,4 +12,6 @@ export class CountryInfoComponent {
     required: true
   })
   public country!: Country;
+
+  public existsCountry = this.country !== undefined
 }
