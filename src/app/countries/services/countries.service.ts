@@ -26,8 +26,8 @@ export class CountriesService {
     return this.getCountriesRequest(url);
   }
 
-  public searchByRegion(term: string): Observable<Country[]> {
-    const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}/${term}`;
+  public searchByRegion(region: string): Observable<Country[]> {
+    const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}/${region}`;
     return this.getCountriesRequest(url);
   }
 
