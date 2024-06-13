@@ -1,5 +1,6 @@
+<!-- (keyup.enter)="emitValue(txtSearch.value)" -->
 <input class="form-control"
        type="text"
        [placeholder]="placeholder"
-       (keyup.enter)="emitValue(txtSearch.value)"
+       (input)="onInput(txtSearch.value)"
        #txtSearch />

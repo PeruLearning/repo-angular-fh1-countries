@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 import { Country } from '../interfaces/country';
 
 @Injectable({
@@ -17,33 +17,18 @@ export class CountriesService {
   constructor(private http: HttpClient) { }
 
   public searchByCapital(term: string): Observable<Country[]> {
-    const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}`;
-    return this.http.get<Country[]>(`${url}/${term}`)
-      .pipe(
-        catchError(() => {
-          return of([])
-        })
-      );
+    const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}/${term}`;
+    return this.getCountriesRequest(url);
   }
 
   public searchByCountryName(term: string): Observable<Country[]> {
-    const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}`;
-    return this.http.get<Country[]>(`${url}/${term}`)
-      .pipe(
-        catchError(() => {
-          return of([])
-        })
-      );
+    const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}/${term}`;
+    return this.getCountriesRequest(url);
   }
 
   public searchByRegion(term: string): Observable<Country[]> {
-    const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}`;
-    return this.http.get<Country[]>(`${url}/${term}`)
-      .pipe(
-        catchError(() => {
-          return  of([])
-        })
-      );
+    const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}/${term}`;
+    return this.getCountriesRequest(url);
   }
 
   public getByAlphaCode(code: string): Observable<Country | null> {
@@ -54,6 +39,16 @@ export class CountriesService {
         catchError(() => {
           return of(null)
         })
+      );
+  }
+
+  private getCountriesRequest(url: string): Observable<Country[]> {
+    return this.http.get<Country[]>(url)
+      .pipe(
+        catchError(() => {
+          return of([])
+        }),
+        // delay(2000)
       );
   }
 }
