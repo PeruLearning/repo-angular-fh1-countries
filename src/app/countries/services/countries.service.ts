@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, pipe, tap } from 'rxjs';
+import { Observable, catchError, delay, map, of, pipe, tap } from 'rxjs';
 import { Country } from '../interfaces/country.interface';
 import { CacheStore } from '../interfaces/cache-store.interface';
 import { Region } from '../types/region.type';
@@ -23,14 +23,16 @@ export class CountriesService {
   };
 
   constructor(private http: HttpClient) {
-    console.log('CountriesService init');
+    this.loadFromLocalStorage();
   }
 
   public searchByCapital(term: string): Observable<Country[]> {
     const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}/${term}`;
     return this.getCountriesRequest(url)
       .pipe(
-        tap(response => this.cacheStore.byCapital = { term, countries: response})
+        tap(response => this.cacheStore.byCapital = { term, countries: response }),
+        tap(() => this.saveToLocalStorage())
+        // delay(2000)
       );
   }
 
@@ -38,7 +40,9 @@ export class CountriesService {
     const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}/${term}`;
     return this.getCountriesRequest(url)
       .pipe(
-        tap(response => this.cacheStore.byCountry = {term, countries: response})
+        tap(response => this.cacheStore.byCountry = { term, countries: response }),
+        tap(() => this.saveToLocalStorage())
+        // delay(2000)
       );
   }
 
@@ -46,7 +50,9 @@ export class CountriesService {
     const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}/${region}`;
     return this.getCountriesRequest(url)
     .pipe(
-      tap(response => this.cacheStore.byRegion = { region, countries: response })
+      tap(response => this.cacheStore.byRegion = { region, countries: response }),
+      tap(() => this.saveToLocalStorage())
+      // delay(2000)
     );
   }
 
@@ -66,8 +72,17 @@ export class CountriesService {
       .pipe(
         catchError(() => {
           return of([])
-        }),
-        // delay(2000)
+        })
       );
+  }
+
+  private saveToLocalStorage(): void {
+    localStorage.setItem('cacheStore', JSON.stringify(this.cacheStore));
+  }
+
+  private loadFromLocalStorage(): void {
+    if (localStorage.getItem('cacheStore')) {
+      this.cacheStore = JSON.parse(localStorage.getItem('cacheStore')!);
+    }
   }
 }

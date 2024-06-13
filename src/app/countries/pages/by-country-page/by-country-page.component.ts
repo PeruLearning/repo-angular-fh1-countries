@@ -11,6 +11,7 @@ export class ByCountryPageComponent implements OnInit {
 
   public initialValue: string = '';
   public countries: Country[] = [];
+  public isLoading: boolean = false;
 
   constructor(private service: CountriesService) { }
 
@@ -20,9 +21,11 @@ export class ByCountryPageComponent implements OnInit {
   }
 
   public searchByCountry(term: string): void {
+    this.isLoading = true;
     this.service.searchByCountryName(term)
       .subscribe(response => {
         this.countries = response;
+        this.isLoading = false;
       });
   }
 }
