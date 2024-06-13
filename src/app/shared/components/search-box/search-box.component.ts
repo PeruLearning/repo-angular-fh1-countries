@@ -8,6 +8,11 @@ import { Subject, Subscription, debounceTime } from 'rxjs';
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
 
+  @Input({
+    required: true
+  })
+  public initialValue: string = '';
+
   private debouncer = new Subject<string>();
   private debouncerSubscription?: Subscription;
 
@@ -35,10 +40,6 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
   @Output()
   public onDebounce = new EventEmitter<string>();
-
-  public emitValue(value: string): void {
-    this.onValue.emit(value);
-  }
 
   public onInput(term: string): void {
     this.debouncer.next(term);

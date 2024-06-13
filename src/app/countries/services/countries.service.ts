@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, delay, map, of } from 'rxjs';
-import { Country } from '../interfaces/country';
+import { Observable, catchError, map, of, pipe, tap } from 'rxjs';
+import { Country } from '../interfaces/country.interface';
+import { CacheStore } from '../interfaces/cache-store.interface';
+import { Region } from '../types/region.type';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +16,38 @@ export class CountriesService {
   private getByRegionEndpoint: string = 'v3.1/region';
   private getByAlphaCodeEndpoint: string = 'v3.1/alpha';
 
-  constructor(private http: HttpClient) { }
+  public cacheStore: CacheStore = {
+    byCapital: { term: '', countries: [] },
+    byCountry: { term: '', countries: [] },
+    byRegion: { region: '', countries: [] }
+  };
+
+  constructor(private http: HttpClient) {
+    console.log('CountriesService init');
+  }
 
   public searchByCapital(term: string): Observable<Country[]> {
     const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}/${term}`;
-    return this.getCountriesRequest(url);
+    return this.getCountriesRequest(url)
+      .pipe(
+        tap(response => this.cacheStore.byCapital = { term, countries: response})
+      );
   }
 
   public searchByCountryName(term: string): Observable<Country[]> {
     const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}/${term}`;
-    return this.getCountriesRequest(url);
+    return this.getCountriesRequest(url)
+      .pipe(
+        tap(response => this.cacheStore.byCountry = {term, countries: response})
+      );
   }
 
-  public searchByRegion(region: string): Observable<Country[]> {
+  public searchByRegion(region: Region): Observable<Country[]> {
     const url: string = `${this.apiBaseAddress}/${this.getByRegionEndpoint}/${region}`;
-    return this.getCountriesRequest(url);
+    return this.getCountriesRequest(url)
+    .pipe(
+      tap(response => this.cacheStore.byRegion = { region, countries: response })
+    );
   }
 
   public getByAlphaCode(code: string): Observable<Country | null> {
