@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'all'
+    redirectTo: 'by-capital'
   }
 ];
 
