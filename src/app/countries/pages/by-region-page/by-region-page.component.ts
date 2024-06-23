@@ -4,7 +4,6 @@ import { CountriesService } from '../../services/countries.service';
 import { Region } from '../../types/region.type';
 
 @Component({
-  selector: 'app-by-region-page',
   templateUrl: './by-region-page.component.html',
   styles: ``
 })

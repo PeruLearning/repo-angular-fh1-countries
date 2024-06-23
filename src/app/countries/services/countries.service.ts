@@ -27,6 +27,8 @@ export class CountriesService {
   }
 
   public searchByCapital(term: string): Observable<Country[]> {
+    if (term?.length === 0) return of([]);
+
     const url: string = `${ this.apiBaseAddress }/${this.getByCapitalEndpoint}/${term}`;
     return this.getCountriesRequest(url)
       .pipe(
@@ -37,6 +39,8 @@ export class CountriesService {
   }
 
   public searchByCountryName(term: string): Observable<Country[]> {
+    if (term?.length === 0) return of([]);
+
     const url: string = `${this.apiBaseAddress}/${this.getByNameEndpoint}/${term}`;
     return this.getCountriesRequest(url)
       .pipe(
