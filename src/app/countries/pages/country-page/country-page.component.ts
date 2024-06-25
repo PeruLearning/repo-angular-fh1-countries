@@ -6,7 +6,7 @@ import { Country } from '../../interfaces/country.interface';
 
 @Component({
   templateUrl: './country-page.component.html',
-  styles: ``
+  styleUrl: './country-page.component.css'
 })
 export class CountryPageComponent implements OnInit {
 

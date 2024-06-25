@@ -11,8 +11,19 @@
   <hr>
   <div class="row">
     <div class="col-4">
-      <h3>Flag</h3>
-      <img [src]="country.flags.svg" [alt]="country.name.common" class="img-thumbnail">
+      <div class="row">
+        <div class="col">
+          <h3>Flag</h3>
+          <img [src]="country.flags.svg" [alt]="country.name.common" class="img-thumbnail">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span class="fs-6 country-flags-alt">
+            {{country.flags.alt}}
+          </span>
+        </div>
+      </div>
     </div>
     <div class="col">
       <h3>Información</h3>
@@ -29,21 +40,23 @@
         <li class="list-group-item">
           <strong>Capital: </strong>{{country.capital}}
         </li>
+        <li class="list-group-item">
+          <div class="flex flex-wrap">
+            <span class="badge bg-secondary m-1"
+              *ngFor="let currency of country.currencies | keyvalue">
+              {{ currency.key| uppercase }} - {{ country.currencies[currency.key].name }}
+            </span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h3>Translations</h3>
+          <div class="flex flex-wrap">
+            <span class="badge bg-primary m-1" *ngFor="let translation of country.translations | keyvalue">
+              {{ translation.key | uppercase }} - {{ country.translations[translation.key].common }}
+            </span>
+          </div>
+        </li>
       </ul>
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col">
-      <h3>Translations</h3>
-      <div class="d-flex flex-wrap">
-        <span class="badge bg-primary m-1">{{country.translations['ara'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['bre'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['per'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['rus'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['zho'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['jpn'].common}}</span>
-        <span class="badge bg-primary m-1">{{country.translations['kor'].common}}</span>
-      </div>
     </div>
   </div>
 </div>
