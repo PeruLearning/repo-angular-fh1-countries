@@ -1,5 +1,5 @@
 <ng-template #loading>
-  <shared-loading-spinner *ngIf="isLoading"></shared-loading-spinner>
+  <shared-loading-spinner></shared-loading-spinner>
 </ng-template>
 
 <div *ngIf="country; else loading">
@@ -58,5 +58,8 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="map-container mb-3">
+    <maps-map />
   </div>
 </div>
