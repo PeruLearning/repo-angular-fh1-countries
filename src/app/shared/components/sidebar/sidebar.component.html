@@ -2,17 +2,10 @@
 <hr>
 
 <ul class="list-group">
-  <li class="list-group-item" routerLink="countries/by-capital" routerLinkActive="active">
-    By capital
-  </li>
-
-  <li class="list-group-item" routerLink="countries/by-country" routerLinkActive="active">
-    By country
-  </li>
-
-  <li class="list-group-item"
-      routerLink="countries/by-region"
-      routerLinkActive="active">
-    By región
-  </li>
+  <ul *ngFor="let item of menuItems"
+    class="list-group-item"
+    [routerLink]="item.url"
+    routerLinkActive="active">
+    {{item.name}}
+  </ul>
 </ul>
