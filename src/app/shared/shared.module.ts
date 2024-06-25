@@ -24,9 +24,6 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     RouterModule
   ],
   exports: [
-    AboutPageComponent,
-    HomePageComponent,
-    ContactPageComponent,
     SidebarComponent,
     SearchBoxComponent,
     LoadingSpinnerComponent
