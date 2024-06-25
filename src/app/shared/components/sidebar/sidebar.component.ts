@@ -5,7 +5,7 @@ import { SharedService } from '../../services/shared.service';
 @Component({
   selector: 'shared-sidebar',
   templateUrl: './sidebar.component.html',
-  styles: ``
+  styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit {
 

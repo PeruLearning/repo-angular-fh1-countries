@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CountriesService } from '../../services/countries.service';
 import { switchMap } from 'rxjs';
 import { Country } from '../../interfaces/country.interface';
+import { LatLong } from '../../../maps/interfaces/lat-long.interface';
 
 @Component({
   templateUrl: './country-page.component.html',
@@ -12,6 +13,7 @@ export class CountryPageComponent implements OnInit {
 
   public country?: Country;
   public isLoading: boolean = false;
+  public originalPoint!: LatLong;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,6 +31,7 @@ export class CountryPageComponent implements OnInit {
         }
 
         this.country = country;
+        this.originalPoint = { latitude: country.latlng[0], longitude: country.latlng[1] }
         this.isLoading = false;
         return;
       }
