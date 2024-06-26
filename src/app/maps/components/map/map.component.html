@@ -1,5 +1,7 @@
-<!-- <ng-template #loading>
-  <span>Loading map...</span>
-</ng-template> -->
+<div *ngIf="!isMapReady" class="d-flex justify-content-center mt-3">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
 
-<div [id]="mapId" style="height: 100%; width: 100%; min-height: 14rem;"></div>
+<div [class.hidden]="!isMapReady" [id]="mapId" style="height: 100%; width: 100%; min-height: 14rem;"></div>
